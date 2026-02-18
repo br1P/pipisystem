@@ -1,0 +1,35 @@
+<div class="sales-history">
+  <h2>Historial de Ventas</h2>
+
+  <div class="loading" *ngIf="loading">
+    Cargando historial de ventas...
+  </div>
+
+  <div class="error" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="sales-list" *ngIf="!loading && !error">
+    <div class="sale-card" *ngFor="let sale of sales">
+      <div class="sale-header">
+        <span class="sale-id">Venta #{{ sale.id }}</span>
+        <span class="sale-date">{{ formatDate(sale.created_at!) }}</span>
+      </div>
+      <div class="sale-details">
+        <span class="total-items">{{ getTotalItems(sale) }} productos</span>
+        <span class="sale-total">Total: ${{ sale.total }}</span>
+      </div>
+      <div class="sale-items">
+        <div class="item" *ngFor="let item of sale.items">
+          <span class="item-name">{{ item.product.name }}</span>
+          <span class="item-quantity">x{{ item.quantity }}</span>
+          <span class="item-price">${{ item.product.price * item.quantity }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-sales" *ngIf="sales.length === 0">
+      No hay ventas registradas aún.
+    </div>
+  </div>
+</div>

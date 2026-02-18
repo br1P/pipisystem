@@ -1,0 +1,239 @@
+/* Mobile-first product grid styles */
+.product-grid {
+  padding: 0.5rem;
+}
+
+.product-grid h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+
+
+.create-form {
+  background-color: var(--pink-pastel);
+  border: 1px solid var(--violet-lavender);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.create-form input {
+  padding: 0.75rem;
+  border: 1px solid var(--violet-lavender);
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  background-color: var(--white);
+}
+
+.create-form input:focus {
+  outline: none;
+  border-color: var(--pink-main);
+  box-shadow: 0 0 0 0.2rem rgba(244, 167, 193, 0.25);
+}
+
+.create-form button {
+  padding: 0.75rem;
+  background-color: var(--pink-main);
+  color: var(--white);
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.create-form button:hover:not(:disabled) {
+  background-color: var(--violet-dark);
+}
+
+.create-form button:disabled {
+  background-color: var(--gray-light);
+  cursor: not-allowed;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.form-buttons button {
+  flex: 1;
+}
+
+.form-buttons button[type="button"] {
+  background-color: var(--text-secondary);
+  color: var(--white);
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: var(--gray-light);
+}
+
+.products {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.product-card {
+  background-color: var(--white);
+  border: 1px solid var(--violet-lavender);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  text-align: center;
+  transition: box-shadow 0.2s ease;
+}
+
+.product-card:hover:not(.out-of-stock) {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-card.out-of-stock {
+  opacity: 0.6;
+  background-color: var(--gray-light);
+}
+
+.product-card h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--title-color);
+}
+
+.price {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--price-color);
+  margin: 0.25rem 0;
+}
+
+.stock {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin: 0.25rem 0;
+}
+
+.add-btn {
+  width: 80%;
+  min-height: 2.5rem;
+  background-color: var(--violet-dark);
+  color: var(--white);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 0.5rem;
+}
+
+.add-btn:hover:not(:disabled) {
+  background-color: var(--pink-main);
+}
+
+.add-btn:active:not(:disabled) {
+  background-color: var(--violet-darker);
+}
+
+.add-btn:disabled {
+  background-color: var(--gray-light);
+  cursor: not-allowed;
+}
+
+.product-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  justify-content: center;
+}
+
+.edit-btn, .delete-btn {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.edit-btn {
+  background-color: var(--white);
+  color: var(--text-secondary);
+}
+
+.edit-btn:hover {
+  background-color: var(--pink-pastel);
+}
+
+.delete-btn {
+  background-color: var(--white);
+  color: var(--pink-main);
+}
+
+.delete-btn:hover {
+  background-color: var(--pink-pastel);
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1rem;
+}
+
+.error {
+  color: var(--pink-main);
+  background-color: var(--pink-light);
+  border-radius: 0.25rem;
+  margin: 1rem 0;
+}
+
+/* Tablet and desktop styles */
+@media (min-width: 768px) {
+  .products {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .product-card {
+    padding: 1rem;
+  }
+
+  .product-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .price {
+    font-size: 1.25rem;
+  }
+
+  .stock {
+    font-size: 0.875rem;
+  }
+
+  .add-btn {
+    width: 100%;
+    min-height: 3rem;
+    font-size: 1rem;
+  }
+
+  .edit-btn, .delete-btn {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 0.9rem;
+  }
+}

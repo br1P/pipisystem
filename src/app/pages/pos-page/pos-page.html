@@ -1,0 +1,62 @@
+<div class="pos-container">
+  <header class="pos-header">
+    <h1>Sistema pipi :3</h1>
+    <div class="nav-buttons">
+      <button class="nav-btn sales-history-btn desktop-only" (click)="toggleSalesHistory()">
+        📊 Historial
+      </button>
+      <button class="nav-btn edit-mode-btn desktop-only" (click)="toggleEditMode()">
+        {{ editMode ? 'Modo Normal' : 'Modo Edición' }}
+      </button>
+      <button class="nav-btn create-btn desktop-only" (click)="toggleCreateForm()">
+        {{ showCreateForm ? 'Cancelar' : 'Crear Producto' }}
+      </button>
+      <button class="hamburger-btn" (click)="toggleMenu()" aria-label="Abrir menú">
+        <span class="hamburger-line" [class.active]="menuOpen"></span>
+        <span class="hamburger-line" [class.active]="menuOpen"></span>
+        <span class="hamburger-line" [class.active]="menuOpen"></span>
+      </button>
+    </div>
+    <div class="menu-overlay" [class.active]="menuOpen" (click)="closeMenu()"></div>
+    
+    <div class="hamburger-menu" [class.open]="menuOpen">
+      <button class="nav-btn sales-history-btn menu-item" (click)="toggleSalesHistory(); closeMenu()">
+        📊 Historial
+      </button>
+      <button class="nav-btn edit-mode-btn menu-item" (click)="toggleEditMode(); closeMenu()">
+        {{ editMode ? 'Modo Normal' : 'Modo Edición' }}
+      </button>
+      <button class="nav-btn create-btn menu-item" (click)="toggleCreateForm(); closeMenu()">
+        {{ showCreateForm ? 'Cancelar' : 'Crear Producto' }}
+      </button>
+    </div>
+  </header>
+
+  <main class="pos-main">
+    <section class="products-section">
+      <app-product-grid [showCreateForm]="showCreateForm" [editMode]="editMode" (formToggled)="showCreateForm = $event"></app-product-grid>
+    </section>
+  </main>
+
+  <!-- Cart Modal Overlay -->
+  <div class="cart-modal-overlay" *ngIf="showCart" (click)="closeCart()">
+    <div class="cart-modal" (click)="$event.stopPropagation()">
+      <button class="cart-close-btn" (click)="closeCart()" aria-label="Cerrar carrito">×</button>
+      <app-cart></app-cart>
+      <app-checkout></app-checkout>
+    </div>
+  </div>
+
+  <!-- Sales History Modal Overlay -->
+  <div class="cart-modal-overlay" *ngIf="showSalesHistory" (click)="closeSalesHistory()">
+    <div class="cart-modal" (click)="$event.stopPropagation()">
+      <button class="cart-close-btn" (click)="closeSalesHistory()" aria-label="Cerrar historial">×</button>
+      <app-sales-history></app-sales-history>
+    </div>
+  </div>
+
+  <!-- Floating Cart Button -->
+  <button class="floating-cart-btn" (click)="toggleCart()">
+    🛒
+  </button>
+</div>

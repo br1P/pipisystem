@@ -1,0 +1,51 @@
+<div class="cart">
+  <h2>Carrito</h2>
+
+  <div class="empty-cart" *ngIf="cartItems.length === 0">
+    <p>El carrito está vacío</p>
+  </div>
+
+  <div class="cart-items" *ngIf="cartItems.length > 0">
+    <div class="cart-item" *ngFor="let item of cartItems">
+      <div class="item-info">
+        <h4>{{ item.product.name }}</h4>
+        <p class="price">${{ item.product.price }} c/u</p>
+      </div>
+
+      <div class="quantity-controls">
+        <button
+          class="qty-btn"
+          (click)="updateQuantity(item.product.id, item.quantity - 1)"
+          [disabled]="item.quantity <= 1"
+        >
+          -
+        </button>
+        <span class="quantity">{{ item.quantity }}</span>
+        <button
+          class="qty-btn"
+          (click)="updateQuantity(item.product.id, item.quantity + 1)"
+        >
+          +
+        </button>
+      </div>
+
+      <div class="item-total">
+        <p>${{ item.product.price * item.quantity }}</p>
+      </div>
+
+      <button
+        class="remove-btn"
+        (click)="removeProduct(item.product.id)"
+        aria-label="Remover producto"
+      >
+        X
+      </button>
+    </div>
+  </div>
+
+  <div class="cart-total" *ngIf="cartItems.length > 0">
+    <div class="total-row">
+      <strong>Total: ${{ total }}</strong>
+    </div>
+  </div>
+</div>

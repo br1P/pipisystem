@@ -1,0 +1,46 @@
+<div class="product-grid">
+  <h2>Productos</h2>
+
+  <div class="create-form" *ngIf="showCreateForm">
+    <input type="text" [(ngModel)]="newProduct.name" placeholder="Nombre del producto" />
+    <input type="number" [(ngModel)]="newProduct.price" placeholder="Precio" min="0" step="0.01" />
+    <input type="number" [(ngModel)]="newProduct.stock" placeholder="Stock inicial" min="0" />
+    <div class="form-buttons">
+      <button (click)="editingProductId ? updateProduct() : createProduct()" [disabled]="!isFormValid()">
+        {{ editingProductId ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" *ngIf="editingProductId" (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <p>Cargando productos...</p>
+  </div>
+
+  <div class="error" *ngIf="error && !loading">
+    <p>{{ error }}</p>
+  </div>
+
+  <div class="products" *ngIf="!loading && !error">
+    <div
+      class="product-card"
+      *ngFor="let product of products"
+      [class.out-of-stock]="product.stock === 0"
+    >
+      <h3>{{ product.name }}</h3>
+      <p class="price">${{ product.price }}</p>
+      <p class="stock">Stock: {{ product.stock }}</p>
+      <button
+        class="add-btn"
+        (click)="addToCart(product)"
+        [disabled]="product.stock === 0"
+      >
+        {{ product.stock === 0 ? 'Sin stock' : 'Agregar al carrito' }}
+      </button>
+      <div class="product-actions" *ngIf="editMode">
+        <button class="edit-btn" (click)="startEdit(product)" title="Editar">✏️</button>
+        <button class="delete-btn" (click)="deleteProduct(product.id)" title="Eliminar">🗑️</button>
+      </div>
+    </div>
+  </div>
+</div>

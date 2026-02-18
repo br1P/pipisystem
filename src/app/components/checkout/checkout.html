@@ -1,0 +1,101 @@
+<div class="checkout-container">
+  <h2>Checkout</h2>
+
+  <div class="cart-summary" *ngIf="cartItems.length > 0">
+    <h3>Resumen del carrito</h3>
+    <div class="cart-item" *ngFor="let item of cartItems">
+      <span>{{ item.product.name }}</span>
+      <span>{{ item.quantity }} x ${{ item.product.price }}</span>
+      <span>${{ item.product.price * item.quantity }}</span>
+    </div>
+    <div class="total">
+      <strong>Total: ${{ total }}</strong>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <button class="finalizar-btn" (click)="finalizarCompra()" [disabled]="isProcessing || cartItems.length === 0">
+    {{ isProcessing ? 'Procesando...' : 'Finalizar' }}
+  </button>
+
+  <div class="empty-cart" *ngIf="cartItems.length === 0 && !isProcessing">
+    <p>El carrito está vacío</p>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal-overlay" *ngIf="showPaymentModal" (click)="closePaymentModal()">
+  <div class="modal-content payment-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Seleccione Método de Pago</h3>
+      <button class="header-close-btn" (click)="closePaymentModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Error Message -->
+      <div class="error-message" *ngIf="errorMessage">
+        <p>{{ errorMessage }}</p>
+      </div>
+
+      <!-- Processing State -->
+      <div class="processing-state" *ngIf="isProcessing">
+        <p>Procesando venta...</p>
+        <div class="spinner"></div>
+      </div>
+
+      <!-- Initial Selection -->
+      <div class="payment-selection" *ngIf="!selectedPaymentMethod && !isProcessing">
+        <button class="payment-btn cash" (click)="selectPaymentMethod('cash')">
+          💸 Efectivo
+        </button>
+        <button class="payment-btn transfer" (click)="selectPaymentMethod('transfer')">
+          🏦 Transferencia
+        </button>
+      </div>
+
+      <!-- Cash Payment Form -->
+      <div class="cash-payment-form" *ngIf="selectedPaymentMethod === 'cash' && !isProcessing">
+        <div class="amount-display">
+          <span class="label">Total a Pagar:</span>
+          <span class="value">${{ total }}</span>
+        </div>
+
+        <div class="input-group">
+          <label>Monto Recibido</label>
+          <input type="number" [(ngModel)]="amountPaid" placeholder="Ingrese monto" autofocus>
+        </div>
+
+        <div class="change-display" [class.valid]="(amountPaid || 0) >= total">
+          <span class="label">Vuelto:</span>
+          <span class="value">${{ change }}</span>
+        </div>
+
+        <div class="modal-footer">
+          <button class="secondary-btn" (click)="selectedPaymentMethod = null">Volver</button>
+          <button class="finalizar-btn" [disabled]="!canConfirmCashPayment || isProcessing" (click)="processSale()">
+            {{ isProcessing ? 'Procesando...' : 'Confirmar Pago' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" *ngIf="showSuccessModal" (click)="showSuccessModal = false">
+  <div class="modal-content success-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>¡Compra Exitosa!</h3>
+    </div>
+    <div class="modal-body">
+      <p>Compra realizada exitosamente</p>
+      <div class="checkmark">✓</div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-close-btn" (click)="showSuccessModal = false">Aceptar</button>
+    </div>
+  </div>
+</div>
