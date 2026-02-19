@@ -24,7 +24,7 @@ export class ProductGrid implements OnInit {
   loading = true;
   error = '';
   editingProductId: string | null = null;
-  newProduct: Omit<Product, 'id'> = { name: '', price: 0, stock: 0 };
+  newProduct: { name: string; price: number | null; stock: number | null } = { name: '', price: null, stock: null };
 
   ngOnInit() {
     this.loadProducts();
@@ -51,22 +51,29 @@ export class ProductGrid implements OnInit {
   toggleCreateForm() {
     this.showCreateForm = !this.showCreateForm;
     if (!this.showCreateForm) {
-      this.newProduct = { name: '', price: 0, stock: 0 };
+      this.newProduct = { name: '', price: null, stock: null };
     }
   }
 
   isFormValid(): boolean {
-    return this.newProduct.name.trim() !== '' && this.newProduct.price > 0 && this.newProduct.stock >= 0;
+    return this.newProduct.name.trim() !== '' && 
+           this.newProduct.price !== null && this.newProduct.price > 0 && 
+           this.newProduct.stock !== null && this.newProduct.stock >= 0;
   }
 
   async createProduct() {
     if (!this.isFormValid()) return;
 
     try {
-      const createdProduct = await this.supabaseService.createProduct(this.newProduct).toPromise();
+      const productData = {
+        name: this.newProduct.name,
+        price: this.newProduct.price!,
+        stock: this.newProduct.stock!
+      };
+      const createdProduct = await this.supabaseService.createProduct(productData).toPromise();
       if (createdProduct) {
         this.products.push(createdProduct);
-        this.newProduct = { name: '', price: 0, stock: 0 };
+        this.newProduct = { name: '', price: null, stock: null };
         this.formToggled.emit(false);
       }
     } catch (error: any) {
@@ -84,7 +91,12 @@ export class ProductGrid implements OnInit {
     if (!this.isFormValid() || !this.editingProductId) return;
 
     try {
-      const updatedProduct = await this.supabaseService.updateProduct(this.editingProductId, this.newProduct).toPromise();
+      const productData = {
+        name: this.newProduct.name,
+        price: this.newProduct.price!,
+        stock: this.newProduct.stock!
+      };
+      const updatedProduct = await this.supabaseService.updateProduct(this.editingProductId, productData).toPromise();
       if (updatedProduct) {
         const index = this.products.findIndex(p => p.id === this.editingProductId);
         if (index !== -1) {
@@ -98,7 +110,7 @@ export class ProductGrid implements OnInit {
   }
 
   cancelEdit() {
-    this.newProduct = { name: '', price: 0, stock: 0 };
+    this.newProduct = { name: '', price: null, stock: null };
     this.editingProductId = null;
     this.formToggled.emit(false);
   }
