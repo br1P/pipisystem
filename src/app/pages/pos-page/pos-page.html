@@ -5,6 +5,9 @@
       <button class="nav-btn sales-history-btn desktop-only" (click)="toggleSalesHistory()">
         📊 Historial
       </button>
+      <span class="nav-btn revenue-badge desktop-only">
+        💰 ${{ dailyRevenue }}
+      </span>
       <button class="nav-btn edit-mode-btn desktop-only" (click)="toggleEditMode()">
         {{ editMode ? 'Modo Normal' : 'Modo Edición' }}
       </button>
@@ -18,11 +21,16 @@
       </button>
     </div>
     <div class="menu-overlay" [class.active]="menuOpen" (click)="closeMenu()"></div>
-    
+
     <div class="hamburger-menu" [class.open]="menuOpen">
+      <span class="nav-btn revenue-badge menu-item">
+        💰 Recaudado hoy: ${{ dailyRevenue }}
+      </span>
+
       <button class="nav-btn sales-history-btn menu-item" (click)="toggleSalesHistory(); closeMenu()">
         📊 Historial
       </button>
+
       <button class="nav-btn edit-mode-btn menu-item" (click)="toggleEditMode(); closeMenu()">
         {{ editMode ? 'Modo Normal' : 'Modo Edición' }}
       </button>
@@ -34,7 +42,8 @@
 
   <main class="pos-main">
     <section class="products-section">
-      <app-product-grid [showCreateForm]="showCreateForm" [editMode]="editMode" (formToggled)="showCreateForm = $event"></app-product-grid>
+      <app-product-grid [showCreateForm]="showCreateForm" [editMode]="editMode"
+        (formToggled)="showCreateForm = $event"></app-product-grid>
     </section>
   </main>
 
@@ -56,7 +65,8 @@
   </div>
 
   <!-- Floating Cart Button -->
-  <button class="floating-cart-btn" (click)="toggleCart()">
+  <button class="floating-cart-btn" [class.cart-animating]="cartAnimating" (click)="toggleCart()">
     🛒
   </button>
+
 </div>

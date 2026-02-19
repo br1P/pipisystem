@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Product, CartItem } from '../supabase.service';
 
 @Injectable({
@@ -6,6 +7,9 @@ import { Product, CartItem } from '../supabase.service';
 })
 export class Cart {
   private cart: CartItem[] = [];
+
+  /** Emits every time a product is added */
+  readonly productAdded$ = new Subject<void>();
 
   get cartItems(): CartItem[] {
     return this.cart;
@@ -18,6 +22,7 @@ export class Cart {
     } else {
       this.cart.push({ product, quantity: 1 });
     }
+    this.productAdded$.next();
   }
 
   removeProduct(productId: string): void {
