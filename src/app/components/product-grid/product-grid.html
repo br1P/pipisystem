@@ -24,7 +24,7 @@
   <div class="products" *ngIf="!loading && !error">
     <div
       class="product-card"
-      *ngFor="let product of products"
+      *ngFor="let product of filteredProducts"
       [class.out-of-stock]="product.stock === 0"
     >
       <h3>{{ product.name }}</h3>

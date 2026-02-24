@@ -17,6 +17,7 @@ export class ProductGrid implements OnInit {
 
   @Input() showCreateForm = false;
   @Input() editMode = false;
+  @Input() searchTerm = '';
   @Output() formToggled = new EventEmitter<boolean>();
   @Output() productCreated = new EventEmitter<Product>();
 
@@ -25,6 +26,16 @@ export class ProductGrid implements OnInit {
   error = '';
   editingProductId: string | null = null;
   newProduct: { name: string; price: number | null; stock: number | null } = { name: '', price: null, stock: null };
+
+  get filteredProducts(): Product[] {
+    if (!this.searchTerm.trim()) {
+      return this.products;
+    }
+    const term = this.searchTerm.toLowerCase().trim();
+    return this.products.filter(product => 
+      product.name.toLowerCase().includes(term)
+    );
+  }
 
   ngOnInit() {
     this.loadProducts();

@@ -1,6 +1,16 @@
 <div class="pos-container">
   <header class="pos-header">
     <h1>Sistema pipi :3</h1>
+    <div class="search-container desktop-only">
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Buscar productos..." 
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange($event)"
+      />
+      <span class="search-icon">🔍</span>
+    </div>
     <div class="nav-buttons">
       <button class="nav-btn sales-history-btn desktop-only" (click)="toggleSalesHistory()">
         📊 Historial
@@ -42,7 +52,7 @@
 
   <main class="pos-main">
     <section class="products-section">
-      <app-product-grid [showCreateForm]="showCreateForm" [editMode]="editMode"
+      <app-product-grid [showCreateForm]="showCreateForm" [editMode]="editMode" [searchTerm]="searchTerm"
         (formToggled)="showCreateForm = $event"></app-product-grid>
     </section>
   </main>

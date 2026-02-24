@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ProductGrid } from '../../components/product-grid/product-grid';
 import { Cart } from '../../components/cart/cart';
@@ -10,7 +11,7 @@ import { Cart as CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-pos-page',
-  imports: [CommonModule, ProductGrid, Cart, Checkout, SalesHistory],
+  imports: [CommonModule, FormsModule, ProductGrid, Cart, Checkout, SalesHistory],
   templateUrl: './pos-page.html',
   styleUrl: './pos-page.css',
 })
@@ -29,6 +30,7 @@ export class PosPage implements OnInit, OnDestroy {
   menuOpen = false;
   dailyRevenue = 0;
   cartAnimating = false;
+  searchTerm = '';
 
   ngOnInit() {
     this.loadDailyRevenue();
@@ -106,5 +108,10 @@ export class PosPage implements OnInit, OnDestroy {
     if (this.showSalesHistory) {
       this.closeSalesHistory();
     }
+  }
+
+  onSearchChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchTerm = input.value;
   }
 }
