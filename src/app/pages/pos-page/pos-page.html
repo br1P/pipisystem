@@ -1,11 +1,12 @@
 <div class="pos-container">
   <header class="pos-header">
     <h1>Sistema Pristin</h1>
-    <div class="search-container desktop-only">
+    <div class="search-container">
       <input 
         type="text" 
         class="search-input" 
         placeholder="Buscar productos..." 
+        aria-label="Buscar productos"
         [(ngModel)]="searchTerm"
         (input)="onSearchChange($event)"
       />
@@ -24,7 +25,7 @@
       <button class="nav-btn create-btn desktop-only" (click)="toggleCreateForm()">
         {{ showCreateForm ? 'Cancelar' : 'Crear Producto' }}
       </button>
-      <button class="hamburger-btn" (click)="toggleMenu()" aria-label="Abrir menú">
+      <button class="hamburger-btn" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen" aria-controls="mobile-menu" [attr.aria-label]="menuOpen ? 'Cerrar menú' : 'Abrir menú'">
         <span class="hamburger-line" [class.active]="menuOpen"></span>
         <span class="hamburger-line" [class.active]="menuOpen"></span>
         <span class="hamburger-line" [class.active]="menuOpen"></span>
@@ -32,7 +33,7 @@
     </div>
     <div class="menu-overlay" [class.active]="menuOpen" (click)="closeMenu()"></div>
 
-    <div class="hamburger-menu" [class.open]="menuOpen">
+    <div class="hamburger-menu" id="mobile-menu" [class.open]="menuOpen">
       <span class="nav-btn revenue-badge menu-item">
         💰 Recaudado hoy: ${{ dailyRevenue }}
       </span>

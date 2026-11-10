@@ -42,6 +42,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
   margin-bottom: 0.75rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--violet-lavender);
@@ -55,6 +57,7 @@
 .sale-date {
   font-size: 0.875rem;
   color: var(--text-secondary);
+  overflow-wrap: anywhere;
 }
 
 .sale-details {
@@ -92,7 +95,9 @@
 
 .item-name {
   flex: 1;
+  min-width: 0;
   font-weight: 500;
+  overflow-wrap: anywhere;
 }
 
 .item-quantity {
@@ -103,6 +108,7 @@
 .item-price {
   font-weight: 600;
   color: var(--price-color);
+  white-space: nowrap;
 }
 
 .no-sales {

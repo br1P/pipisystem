@@ -25,17 +25,23 @@
 }
 
 .cart-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
   padding: 0.5rem 0;
   border-bottom: 1px solid #e0e0e0;
 }
 
 .cart-item span {
-  flex: 1;
-  text-align: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 0.875rem;
+}
+
+.cart-item span:not(:first-child) {
+  text-align: right;
 }
 
 .total {
@@ -109,6 +115,9 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+  overflow-y: auto;
+  overscroll-behavior: contain;
   animation: fadeIn 0.3s ease-out;
 }
 
@@ -116,13 +125,15 @@
   background-color: white;
   border-radius: 0.75rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  max-width: 90%;
-  width: 400px;
+  width: min(100%, 25rem);
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   animation: slideIn 0.3s ease-out;
 }
 
 .modal-header {
-  padding: 1.5rem 1.5rem 1rem;
+  padding: 1rem 1rem 0.75rem;
   border-bottom: 1px solid #e0e0e0;
   text-align: center;
 }
@@ -135,7 +146,7 @@
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
 }
 
@@ -161,7 +172,7 @@
 }
 
 .modal-footer {
-  padding: 1rem 1.5rem 1.5rem;
+  padding: 0.75rem 1rem 1rem;
   text-align: center;
 }
 
@@ -246,8 +257,8 @@
 
 /* Payment Modal Specifics */
 .payment-modal {
-  width: 500px;
-  max-width: 95vw;
+  width: min(100%, 31.25rem);
+  max-width: 100%;
 }
 
 .header-close-btn {
@@ -282,14 +293,17 @@
 
 .payment-selection {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   justify-content: center;
   margin-bottom: 1rem;
 }
 
 .payment-btn {
   flex: 1;
-  padding: 1.5rem;
+  min-width: min(100%, 8rem);
+  min-height: 5rem;
+  padding: 1rem;
   font-size: 1.1rem;
   font-weight: 600;
   border: 2px solid #eee;
@@ -389,6 +403,7 @@
 
 /* Secondary button for back/cancel */
 .secondary-btn {
+  min-height: 3rem;
   padding: 0 1.5rem;
   background: #f5f5f5;
   color: #333;
@@ -403,6 +418,32 @@
   align-items: center;
   justify-content: center;
   border: none;
+  flex: 1;
+}
+
+.modal-footer .finalizar-btn {
+  flex: 1;
+  min-width: 0;
+  padding-inline: 0.75rem;
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .cart-item {
+    gap: 1rem;
+  }
+
+  .modal-header {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .modal-footer {
+    padding: 1rem 1.5rem 1.5rem;
+  }
 }
 
 .secondary-btn:hover {
